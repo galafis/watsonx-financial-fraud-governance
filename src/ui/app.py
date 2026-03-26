@@ -135,7 +135,7 @@ def _display_prediction_result(data: dict) -> None:
 
     # Narrative
     if data.get("narrative"):
-        st.subheader("📝 AI-Generated Analysis")
+        st.subheader("📝 Automated Analysis")
         st.info(data["narrative"])
 
     # Feature contributions
@@ -153,7 +153,7 @@ def _display_prediction_result(data: dict) -> None:
 def _render_alerts_view() -> None:
     """Render fraud alerts dashboard with Granite narratives."""
     st.header("Active Fraud Alerts")
-    st.info("Fraud alerts with AI-generated narratives will appear here when the model is running.")
+    st.info("Fraud alerts with automated narratives will appear here when the model is running.")
 
     # Sample alerts
     sample_alerts = [

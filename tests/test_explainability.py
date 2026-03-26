@@ -141,7 +141,7 @@ class TestShapExplainer:
         assert isinstance(explanations[0].top_negative_features, list)
 
     def test_explain_auto_transaction_ids(self) -> None:
-        """Auto-generated transaction IDs are used when none provided."""
+        """Auto-created transaction IDs are used when none provided."""
         explainer = ShapExplainer(top_k=1)
 
         mock_xgb = MagicMock()
