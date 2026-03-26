@@ -89,19 +89,23 @@ class ModelFactsheet:
                 },
                 "explainability_method": "SHAP (TreeExplainer) with Granite narrative generation",
             },
-            "training_data": training_data_summary or {
+            "training_data": training_data_summary
+            or {
                 "description": "Synthetic financial transaction data",
                 "size": "Not available",
                 "fraud_rate": "Not available",
                 "date_range": "Not available",
             },
-            "performance_metrics": model_metrics or {
+            "performance_metrics": model_metrics
+            or {
                 "status": "Not evaluated",
             },
-            "fairness_assessment": bias_report or {
+            "fairness_assessment": bias_report
+            or {
                 "status": "Not evaluated",
             },
-            "robustness_monitoring": drift_report or {
+            "robustness_monitoring": drift_report
+            or {
                 "status": "Not evaluated",
             },
             "risk_management": {

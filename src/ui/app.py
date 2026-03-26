@@ -174,7 +174,9 @@ def _render_alerts_view() -> None:
     ]
 
     for alert in sample_alerts:
-        with st.expander(f"🚨 {alert['txn_id']} — ${alert['amount']:,.2f} — {alert['label'].upper()}"):
+        with st.expander(
+            f"🚨 {alert['txn_id']} — ${alert['amount']:,.2f} — {alert['label'].upper()}"
+        ):
             st.metric("Fraud Score", f"{alert['score']:.1%}")
             st.write(alert["narrative"])
 

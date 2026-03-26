@@ -84,7 +84,7 @@ async def predict(request: PredictRequest) -> PredictResponse:
         return result
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Prediction failed: {e!s}")
 
 
 @app.post("/predict/batch", response_model=list[PredictResponse])
@@ -131,7 +131,7 @@ async def explain(request: PredictRequest) -> ExplainResponse:
             ),
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Explanation failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Explanation failed: {e!s}")
 
 
 # ── Governance ───────────────────────────────────────────────────────────────

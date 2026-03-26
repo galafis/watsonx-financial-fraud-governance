@@ -89,11 +89,7 @@ class FeatureEngineer:
                 current_ts = ts.iloc[idx]
                 window_start = current_ts - pd.Timedelta(hours=window_h)
 
-                mask = (
-                    (df["customer_id"] == customer)
-                    & (ts >= window_start)
-                    & (ts < current_ts)
-                )
+                mask = (df["customer_id"] == customer) & (ts >= window_start) & (ts < current_ts)
                 window_amounts = df.loc[mask, "amount"]
 
                 counts.append(len(window_amounts))
@@ -112,9 +108,7 @@ class FeatureEngineer:
 
     def _amount_statistics(self, df: pd.DataFrame) -> pd.DataFrame:
         """Compute amount deviation from customer's historical statistics."""
-        customer_stats = df.groupby("customer_id")["amount"].agg(
-            ["mean", "std", "min", "max"]
-        )
+        customer_stats = df.groupby("customer_id")["amount"].agg(["mean", "std", "min", "max"])
         customer_stats.columns = [
             "customer_amount_mean",
             "customer_amount_std",
@@ -186,9 +180,7 @@ class FeatureEngineer:
                 continue
 
             last = prev_customer.iloc[-1]
-            dist = self._haversine(
-                current_lat, current_lon, last["latitude"], last["longitude"]
-            )
+            dist = self._haversine(current_lat, current_lon, last["latitude"], last["longitude"])
             distances.append(dist)
 
         df["geo_distance_km"] = distances
@@ -208,13 +200,25 @@ class FeatureEngineer:
     def get_feature_names(self) -> list[str]:
         """Return the list of engineered feature names for model input."""
         base = [
-            "amount", "log_amount", "hour", "day_of_week", "is_weekend", "is_night",
-            "amount_zscore", "amount_to_max_ratio",
-            "customer_amount_mean", "customer_amount_std",
-            "customer_amount_min", "customer_amount_max",
-            "merchant_avg_amount", "merchant_std_amount", "merchant_txn_count",
-            "customer_unique_merchants", "is_new_merchant",
-            "geo_distance_km", "geo_anomaly",
+            "amount",
+            "log_amount",
+            "hour",
+            "day_of_week",
+            "is_weekend",
+            "is_night",
+            "amount_zscore",
+            "amount_to_max_ratio",
+            "customer_amount_mean",
+            "customer_amount_std",
+            "customer_amount_min",
+            "customer_amount_max",
+            "merchant_avg_amount",
+            "merchant_std_amount",
+            "merchant_txn_count",
+            "customer_unique_merchants",
+            "is_new_merchant",
+            "geo_distance_km",
+            "geo_anomaly",
         ]
 
         if self.use_cyclical:

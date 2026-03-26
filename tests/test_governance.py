@@ -10,7 +10,6 @@ from src.governance.bias_detector import BiasDetector
 from src.governance.drift_monitor import DriftMonitor
 from src.governance.factsheet import ModelFactsheet
 
-
 # ── BiasDetector Tests ──────────────────────────────────────────────────────
 
 
@@ -52,9 +51,7 @@ class TestBiasDetector:
 
         protected_df = pd.DataFrame(
             {
-                "age_group": np.concatenate(
-                    [np.repeat("18-25", 100), np.repeat("36-50", 100)]
-                ),
+                "age_group": np.concatenate([np.repeat("18-25", 100), np.repeat("36-50", 100)]),
                 "gender": np.tile(["M", "F"], 100),
             }
         )
@@ -88,7 +85,6 @@ class TestBiasDetector:
 
     def test_evaluate_group_metrics_structure(self) -> None:
         """Each group has count, positive_rate, tpr, and fpr."""
-        n = 100
         y_true = np.concatenate([np.ones(10), np.zeros(90)])
         y_pred = np.concatenate([np.ones(5), np.zeros(5), np.ones(5), np.zeros(85)])
         protected_df = pd.DataFrame(
@@ -96,8 +92,8 @@ class TestBiasDetector:
         )
 
         report = self.detector.evaluate(y_true, y_pred, protected_df)
-        for attr_name, attr_report in report["attributes"].items():
-            for group_name, metrics in attr_report["groups"].items():
+        for _attr_name, attr_report in report["attributes"].items():
+            for _group_name, metrics in attr_report["groups"].items():
                 assert "count" in metrics
                 assert "positive_rate" in metrics
                 assert "tpr" in metrics
@@ -105,7 +101,6 @@ class TestBiasDetector:
 
     def test_equalized_odds_violation(self) -> None:
         """Large TPR gap triggers equalized odds violation."""
-        n = 200
         # Group A: TPR = 1.0 (5 TP out of 5), Group B: TPR = 0.0 (0 TP out of 5)
         y_true = np.concatenate([np.ones(5), np.zeros(95), np.ones(5), np.zeros(95)])
         y_pred = np.concatenate([np.ones(5), np.zeros(95), np.zeros(5), np.zeros(95)])
@@ -196,9 +191,7 @@ class TestDriftMonitor:
         """Full evaluation detects drift when production shifts."""
         rng = np.random.default_rng(42)
         ref = rng.standard_normal((500, 2))
-        prod = np.column_stack(
-            [rng.standard_normal(500) + 5.0, rng.standard_normal(500)]
-        )
+        prod = np.column_stack([rng.standard_normal(500) + 5.0, rng.standard_normal(500)])
         feature_names = ["drifted_feature", "stable_feature"]
 
         report = self.monitor.evaluate_drift(ref, prod, feature_names)

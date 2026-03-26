@@ -7,8 +7,7 @@ from unittest.mock import MagicMock, patch
 import numpy as np
 import pytest
 
-from src.explainability.shap_explainer import ShapExplanation, ShapExplainer
-
+from src.explainability.shap_explainer import ShapExplainer, ShapExplanation
 
 # ── ShapExplanation Tests ───────────────────────────────────────────────────
 
@@ -169,7 +168,7 @@ class TestShapExplainer:
         mock_xgb = MagicMock()
         mock_xgb.shap_values.return_value = [
             np.array([[-0.1, -0.2]]),  # class 0
-            np.array([[0.1, 0.2]]),    # class 1 (fraud)
+            np.array([[0.1, 0.2]]),  # class 1 (fraud)
         ]
         mock_xgb.expected_value = np.array([0.98, 0.02])
 

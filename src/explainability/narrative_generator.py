@@ -53,8 +53,8 @@ class NarrativeGenerator:
             return
 
         try:
-            from ibm_watsonx_ai.foundation_models import ModelInference
             from ibm_watsonx_ai import Credentials
+            from ibm_watsonx_ai.foundation_models import ModelInference
 
             credentials = Credentials(
                 url=settings.watsonx.url,
@@ -92,15 +92,21 @@ class NarrativeGenerator:
         """
         self._initialize_model()
 
-        positive_features = "\n".join(
-            f"  - {name}: contribution = {val:+.4f}"
-            for name, val in explanation.top_positive_features
-        ) or "  (none)"
+        positive_features = (
+            "\n".join(
+                f"  - {name}: contribution = {val:+.4f}"
+                for name, val in explanation.top_positive_features
+            )
+            or "  (none)"
+        )
 
-        negative_features = "\n".join(
-            f"  - {name}: contribution = {val:+.4f}"
-            for name, val in explanation.top_negative_features
-        ) or "  (none)"
+        negative_features = (
+            "\n".join(
+                f"  - {name}: contribution = {val:+.4f}"
+                for name, val in explanation.top_negative_features
+            )
+            or "  (none)"
+        )
 
         prompt = _NARRATIVE_PROMPT.format(
             transaction_id=explanation.transaction_id,

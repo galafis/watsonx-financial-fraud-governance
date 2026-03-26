@@ -62,9 +62,7 @@ class BiasDetector:
                 logger.warning("attribute_missing", attribute=attr)
                 continue
 
-            attr_report = self._evaluate_attribute(
-                y_true, y_pred, protected_df[attr].values, attr
-            )
+            attr_report = self._evaluate_attribute(y_true, y_pred, protected_df[attr].values, attr)
             report["attributes"][attr] = attr_report
 
             if attr_report.get("demographic_parity_violation", False):

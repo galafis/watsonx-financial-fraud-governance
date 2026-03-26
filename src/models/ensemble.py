@@ -72,9 +72,7 @@ class EnsembleFraudDetector:
             verbose=-1,
         )
 
-        self.anomaly_detector = AnomalyDetector(
-            config=cfg.get("isolation_forest", {})
-        )
+        self.anomaly_detector = AnomalyDetector(config=cfg.get("isolation_forest", {}))
 
         self._is_fitted = False
 
@@ -103,7 +101,9 @@ class EnsembleFraudDetector:
         logger.info("ensemble_training_complete")
         return self
 
-    def predict(self, X: np.ndarray, transaction_ids: list[str] | None = None) -> list[FraudPrediction]:
+    def predict(
+        self, X: np.ndarray, transaction_ids: list[str] | None = None
+    ) -> list[FraudPrediction]:
         """Generate fraud predictions for a batch of transactions.
 
         Args:

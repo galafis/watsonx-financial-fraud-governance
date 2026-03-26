@@ -104,18 +104,13 @@ class ShapExplainer:
         explanations: list[ShapExplanation] = []
         for i, txn_id in enumerate(transaction_ids):
             contributions = {
-                feat: round(float(combined_shap[i, j]), 6)
-                for j, feat in enumerate(feature_names)
+                feat: round(float(combined_shap[i, j]), 6) for j, feat in enumerate(feature_names)
             }
 
             # Sort by absolute contribution
             sorted_contribs = sorted(contributions.items(), key=lambda x: abs(x[1]), reverse=True)
-            top_pos = [
-                (name, val) for name, val in sorted_contribs if val > 0
-            ][: self.top_k]
-            top_neg = [
-                (name, val) for name, val in sorted_contribs if val < 0
-            ][: self.top_k]
+            top_pos = [(name, val) for name, val in sorted_contribs if val > 0][: self.top_k]
+            top_neg = [(name, val) for name, val in sorted_contribs if val < 0][: self.top_k]
 
             explanations.append(
                 ShapExplanation(
