@@ -164,7 +164,7 @@ class TestDriftMonitor:
         data = rng.standard_normal(500)
         result = self.monitor.compute_ks_test(data, data)
         assert result["ks_statistic"] == pytest.approx(0.0)
-        assert result["significant_drift"] is False
+        assert result["significant_drift"] == False  # noqa: E712
 
     def test_ks_test_shifted(self) -> None:
         """KS-test detects drift for shifted distributions."""
@@ -172,7 +172,7 @@ class TestDriftMonitor:
         reference = rng.standard_normal(500)
         production = rng.standard_normal(500) + 2.0
         result = self.monitor.compute_ks_test(reference, production)
-        assert result["significant_drift"] is True
+        assert result["significant_drift"] == True  # noqa: E712
         assert result["p_value"] < 0.05
 
     def test_evaluate_drift_no_drift(self) -> None:
@@ -195,7 +195,7 @@ class TestDriftMonitor:
         feature_names = ["drifted_feature", "stable_feature"]
 
         report = self.monitor.evaluate_drift(ref, prod, feature_names)
-        assert report["drift_detected"] is True
+        assert report["drift_detected"] == True  # noqa: E712
         assert "drifted_feature" in report["drifted_features"]
 
     def test_evaluate_drift_report_structure(self) -> None:
@@ -220,7 +220,7 @@ class TestDriftMonitor:
         prod_scores = rng.uniform(0.5, 1.0, 500)
 
         report = self.monitor.evaluate_performance_drift(ref_scores, prod_scores)
-        assert report["performance_drift_detected"] is True
+        assert report["performance_drift_detected"] == True  # noqa: E712
         assert "score_psi" in report
         assert "score_ks_statistic" in report
 
@@ -230,7 +230,7 @@ class TestDriftMonitor:
         scores = rng.uniform(0, 1, 500)
 
         report = self.monitor.evaluate_performance_drift(scores, scores)
-        assert report["performance_drift_detected"] is False
+        assert report["performance_drift_detected"] == False  # noqa: E712
 
 
 # ── ModelFactsheet Tests ────────────────────────────────────────────────────

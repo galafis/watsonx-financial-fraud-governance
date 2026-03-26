@@ -93,12 +93,10 @@ class ShapExplainer:
         combined_shap = (w_xgb * xgb_shap + w_lgb * lgb_shap) / total_w
 
         # Base values
-        xgb_base = float(self._xgb_explainer.expected_value)
-        lgb_base = float(self._lgb_explainer.expected_value)
-        if isinstance(self._xgb_explainer.expected_value, np.ndarray):
-            xgb_base = float(self._xgb_explainer.expected_value[1])
-        if isinstance(self._lgb_explainer.expected_value, np.ndarray):
-            lgb_base = float(self._lgb_explainer.expected_value[1])
+        xgb_ev = self._xgb_explainer.expected_value
+        lgb_ev = self._lgb_explainer.expected_value
+        xgb_base = float(xgb_ev[1]) if isinstance(xgb_ev, (list, np.ndarray)) and np.asarray(xgb_ev).ndim > 0 and np.asarray(xgb_ev).size > 1 else float(xgb_ev)
+        lgb_base = float(lgb_ev[1]) if isinstance(lgb_ev, (list, np.ndarray)) and np.asarray(lgb_ev).ndim > 0 and np.asarray(lgb_ev).size > 1 else float(lgb_ev)
         base_value = (w_xgb * xgb_base + w_lgb * lgb_base) / total_w
 
         explanations: list[ShapExplanation] = []

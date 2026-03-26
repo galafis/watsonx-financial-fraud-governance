@@ -170,14 +170,14 @@ class TestShapExplainer:
             np.array([[-0.1, -0.2]]),  # class 0
             np.array([[0.1, 0.2]]),  # class 1 (fraud)
         ]
-        mock_xgb.expected_value = np.array([0.98, 0.02])
+        mock_xgb.expected_value = 0.02
 
         mock_lgb = MagicMock()
         mock_lgb.shap_values.return_value = [
             np.array([[-0.15, -0.25]]),
             np.array([[0.15, 0.25]]),
         ]
-        mock_lgb.expected_value = np.array([0.97, 0.03])
+        mock_lgb.expected_value = 0.03
 
         explainer._xgb_explainer = mock_xgb
         explainer._lgb_explainer = mock_lgb
